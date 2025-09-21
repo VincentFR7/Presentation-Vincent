@@ -37,6 +37,40 @@
     .left{max-width:70%}
     .right{color:var(--muted);font-size:13px}
     footer{padding:18px 32px;border-top:1px solid rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center}
+
+    /* Galerie */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .gallery-item {
+      background: var(--glass);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-item p {
+      margin: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+    }
+
     @media (max-width:880px){.content{grid-template-columns:1fr;}.right-column{order:2}}
   </style>
 </head>
@@ -89,19 +123,51 @@
                 <div class="right">2024</div>
               </div>
 
-              <p class="meta" style="margin-top:10px">------=== et beaucoup d'autre ===------</p>
+              <p class="meta" style="margin-top:10px">------=== et beaucoup d'autres ===------</p>
             </div>
           </section>
 
           <section class="section" style="margin-top:16px">
             <h2>Type de bots créés (Discord)</h2>
             <ul>
-              <li><strong>Sécurité :</strong> protection contre RAID, suppression de rôles et salons non autorisés, logs détaillés en temps réel, remise à l'état d'origine des permissions de rôles modifiées (si personne non autorisée), Anti-Ban (si personne non autorisée)</li>
+              <li><strong>Sécurité :</strong> protection contre RAID, suppression de rôles et salons non autorisés, logs détaillés en temps réel, remise à l'état d'origine des permissions de rôles modifiées, Anti-Ban</li>
               <li><strong>Utilitaire :</strong> Auto-rôle, rôle réaction, annonce automatique programmée, musique, anniversaire, comptage de membres, etc.</li>
               <li><strong>Modération</strong></li>
               <li><strong>Ticket</strong></li>
-              <li><strong>IA :</strong> blague, correction de fautes, questions, génération (texte uniquement)</li>
+              <li><strong>IA :</strong> blague, correction de fautes, questions, génération texte uniquement</li>
             </ul>
+          </section>
+
+          <section class="section" style="margin-top:16px">
+            <h2>Mes Réalisations</h2>
+
+            <h3 style="margin-top:8px;color:var(--accent)">Développement Discord</h3>
+            <div class="gallery">
+              <div class="gallery-item">
+                <img src="https://i.imgur.com/mNL6Xet.png" alt="Bot Discord">
+                <p class="meta">Bot Discord — Système de ticket</p>
+              </div>
+              <div class="gallery-item">
+                <img src="https://i.imgur.com/BJsYUzy.png" alt="Bot Discord 2">
+                <p class="meta">Bot Discord — Système de ticket</p>
+              </div>
+              <div class="gallery-item">
+                <img src="https://i.imgur.com/anFNUFX.png" alt="Bot Discord 3">
+                <p class="meta">Bot Discord — Système logs</p>
+              </div>
+            </div>
+
+            <h3 style="margin-top:14px;color:var(--accent)">Développement GMOD</h3>
+            <div class="gallery">
+              <div class="gallery-item">
+                <img src="" alt="Addon">
+                <p class="meta">Addon GMod — </p>
+              </div>
+              <div class="gallery-item">
+                <img src="" alt="Addon">
+                <p class="meta">Addon GMod — </p>
+              </div>
+            </div>
           </section>
 
         </main>
@@ -118,15 +184,39 @@
           </div>
         </aside>
       </div>
+    </article>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); justify-content:center; align-items:center; z-index:9999;">
+    <img id="lightbox-img" src="" style="max-width:90%; max-height:90%; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.8);">
+  </div>
 
   <script>
-    // Dissuasion basique côté client et blocage Ctrl+U
+    // Dissuasion 
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('keydown', function(e){
       if(e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === 'I') || (e.ctrlKey && e.key.toUpperCase() === 'U') || (e.ctrlKey && e.key.toUpperCase() === 'S')){
         e.preventDefault();
-        alert('Accès restreint ;)');
+        alert('Accès restreint mon ptit lou ;)');
       }
+    });
+
+    // Lightbox
+    const galleryItems = document.querySelectorAll('.gallery-item img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    galleryItems.forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightbox.style.display = 'flex';
+      });
+    });
+
+    lightbox.addEventListener('click', () => {
+      lightbox.style.display = 'none';
+      lightboxImg.src = '';
     });
   </script>
 </body>
